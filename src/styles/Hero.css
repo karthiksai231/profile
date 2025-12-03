@@ -106,16 +106,33 @@
 
 .btn-game {
   background: transparent;
-  color: var(--color-secondary);
-  border: 2px solid var(--color-secondary);
+  color: #39ff14; /* Neon Green */
+  border: 2px solid #39ff14;
   display: inline-flex;
   align-items: center;
+  font-family: 'Courier New', Courier, monospace; /* Retro font */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 0 5px #39ff14, inset 0 0 5px #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .btn-game:hover {
-  background: rgba(0, 191, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 191, 255, 0.2);
+  background: #39ff14;
+  color: #000;
+  box-shadow: 0 0 20px #39ff14, 0 0 40px #39ff14, inset 0 0 10px #000;
+  text-shadow: none;
+  transform: scale(1.05);
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1.05); }
+  25% { transform: rotate(-3deg) scale(1.05); }
+  75% { transform: rotate(3deg) scale(1.05); }
 }
 
 /* Background Effects */
