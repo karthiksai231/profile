@@ -1,0 +1,99 @@
+{
+  "profile": {
+    "name": "Kartheek Pamidimukkala",
+    "title": "Software Engineer",
+    "phone": "(903)-423-2849",
+    "email": "karthiksai231@gmail.com",
+    "links": [
+      { "name": "Github", "url": "#" },
+      { "name": "Medium", "url": "#" }
+    ],
+    "summary": "Experienced Software Engineer with 8+ years in back-end development, cloud infrastructure (AWS, Azure), and micro-services. Passionate about building scalable, high-performance systems with test-driven development. Proven ability to optimize system performance (300% improvement) and enhance customer experience. Strong background in CI/CD, distributed systems, and cloud deployments."
+  },
+  "employment": [
+    {
+      "company": "Meta",
+      "location": "Raleigh",
+      "role": "Software Engineer",
+      "period": "Apr 2022 — Present",
+      "achievements": [
+        "Designed and developed Caching Service and improved the response time by 80%.",
+        "Developed an automatic sync to refresh the tax rates periodically which helps the customers to get the most updated rates during checkout.",
+        "Created dashboards and alerting for multiple service which our team owns.",
+        "Successfully solved customer impacting defects with in the SLA period."
+      ]
+    },
+    {
+      "company": "Angi Inc",
+      "location": "Raleigh",
+      "role": "Software Engineer",
+      "period": "Dec 2021 — Apr 2022",
+      "achievements": [
+        "Improved customer conversion flows by 30%.",
+        "Designed software solutions by analyzing system performance standards, increasing performance efficiency by 20%.",
+        "Collaborate effectively with team members as well as Quality Engineering and Release Engineering team.",
+        "Consistently demonstrate ownership and on time delivery."
+      ]
+    },
+    {
+      "company": "Bandwidth Inc",
+      "location": "Raleigh",
+      "role": "Senior Software Engineer",
+      "period": "Jul 2021 — Dec 2021",
+      "achievements": [
+        "Deployed highly scalable micro services to AWS using Iac.",
+        "Created self-signed certificated to enable HTTPS for securing transactions.",
+        "Created guidelines for monitoring and logging for the entire platform.",
+        "Core development experience in large scale enterprise Java applications using Spring boot and Spring cloud."
+      ]
+    },
+    {
+      "company": "Lenovo",
+      "location": "Raleigh",
+      "role": "Cloud Platform Engineer",
+      "period": "Dec 2019 — Jul 2021",
+      "achievements": [
+        "Designed scalable software architecture for various software projects.",
+        "Solved cross-region database sync problem required for certain business critical flows.",
+        "Improved one of the back-end service performance by 300% (30K - 100K connections).",
+        "Created dashboard for monitoring the performance of 30 services. Also provided a standard template across teams for creating dashboards for their services.",
+        "Act as mentor for junior engineers and lead small engineering teams in the delivery of enterprise applications."
+      ]
+    },
+    {
+      "company": "Citrix Systems Inc",
+      "location": "Raleigh",
+      "role": "Software Engineer",
+      "period": "Sep 2016 — Dec 2019",
+      "achievements": [
+        "Created RESTful API endpoint's using .Net Core, .Net Standard.",
+        "Used React JS for front-end development.",
+        "Played key role in feature implementation, enhancement and code refactoring.",
+        "Mitigated DDoS attack on the back-end systems by implementing rate limiting.",
+        "Solved multiple customer issues on call with the customers and received positive feedback directly from customers."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Masters in Computer Science",
+      "university": "Texas A&M University",
+      "location": "Dallas",
+      "period": "Jan 2015 — May 2016"
+    },
+    {
+      "degree": "Bachelors in Computer Science",
+      "university": "JNTUH",
+      "location": "Hyderabad",
+      "period": "Sep 2010 — Apr 2014"
+    }
+  ],
+  "skills": [
+    "JavaScript", "MySQL", "Git", "Python", "SQL", "Leadership Skills", "Java", "C#", "Amazon AWS", "Microsoft Azure", "MongoDB", "Spring Boot", "React", "AngularJS", "Docker", "Kubernetes", "Apache Kafka", "C++"
+  ],
+  "certifications": [
+    "AWS Certified Solutions Architect – Associate Certificate",
+    "MongoDB Basics Certificate",
+    "Developing ASP.NET MVC Web Application Certificate"
+  ]
+}
