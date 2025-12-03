@@ -40,3 +40,16 @@
 .modal-close:hover {
   color: var(--color-primary);
 }
+
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 1.5rem;
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .modal-close {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}

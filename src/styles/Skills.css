@@ -28,3 +28,14 @@
   border-color: var(--color-primary);
   box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
 }
+
+@media (max-width: 768px) {
+  .skills-grid {
+    gap: 1rem;
+  }
+
+  .skill-card {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}

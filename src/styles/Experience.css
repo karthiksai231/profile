@@ -137,4 +137,9 @@
   .timeline-item:nth-child(even)::after {
     left: 23px;
   }
+
+  .job-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

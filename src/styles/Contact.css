@@ -72,3 +72,21 @@
   color: var(--color-text-dim);
   font-size: 0.9rem;
 }
+
+@media (max-width: 768px) {
+  .contact-links {
+    width: 100%;
+  }
+
+  .contact-item {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .social-links-large {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}

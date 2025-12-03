@@ -35,3 +35,14 @@
   line-height: 1.8;
   color: var(--color-text-dim);
 }
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}

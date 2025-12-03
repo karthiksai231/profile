@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import '../styles/Header.css';
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -13,6 +14,10 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -33,11 +38,18 @@ const Header = () => {
         <a href="#home" className="logo">
           KP<span className="dot">.</span>
         </a>
-        <nav className="nav">
+
+        <div className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
+        </div>
+
+        <nav className={`nav ${menuOpen ? 'open' : ''}`}>
           <ul>
             {navLinks.map((link) => (
               <li key={link.name}>
-                <a href={link.href}>{link.name}</a>
+                <a href={link.href} onClick={() => setMenuOpen(false)}>{link.name}</a>
               </li>
             ))}
           </ul>
