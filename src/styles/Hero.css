@@ -104,6 +104,20 @@
   background: rgba(255, 215, 0, 0.1);
 }
 
+.btn-game {
+  background: transparent;
+  color: var(--color-secondary);
+  border: 2px solid var(--color-secondary);
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-game:hover {
+  background: rgba(0, 191, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 191, 255, 0.2);
+}
+
 /* Background Effects */
 .hero-background {
   position: absolute;

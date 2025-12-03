@@ -1,11 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaMedium, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaMedium, FaLinkedin, FaEnvelope, FaGamepad } from 'react-icons/fa';
 import resumeData from '../data/resume.json';
+import Modal from './Modal';
+import SnakeGame from './SnakeGame';
 import '../styles/Hero.css';
 
 const Hero = () => {
   const { name, title, summary, links, email } = resumeData.profile;
+  const [isGameOpen, setIsGameOpen] = React.useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,6 +70,9 @@ const Hero = () => {
             <a href="/Kartheek_Pamidimukkala_-_Software_Engineer.pdf" download className="btn btn-outline">
               Download Resume
             </a>
+            <button onClick={() => setIsGameOpen(true)} className="btn btn-game">
+              Play Snake <FaGamepad style={{ marginLeft: '8px' }} />
+            </button>
           </motion.div>
         </motion.div>
       </div>
@@ -74,6 +80,10 @@ const Hero = () => {
         <div className="glow glow-1"></div>
         <div className="glow glow-2"></div>
       </div>
+
+      <Modal isOpen={isGameOpen} onClose={() => setIsGameOpen(false)}>
+        <SnakeGame />
+      </Modal>
     </section>
   );
 };
