@@ -5,8 +5,8 @@
     "phone": "(903)-423-2849",
     "email": "karthiksai231@gmail.com",
     "links": [
-      { "name": "Github", "url": "#" },
-      { "name": "Medium", "url": "#" }
+      { "name": "Github", "url": "https://github.com/karthiksai231" },
+      { "name": "Medium", "url": "https://medium.com/@kartheeksaip" }
     ],
     "summary": "Experienced Software Engineer with 8+ years in back-end development, cloud infrastructure (AWS, Azure), and micro-services. Passionate about building scalable, high-performance systems with test-driven development. Proven ability to optimize system performance (300% improvement) and enhance customer experience. Strong background in CI/CD, distributed systems, and cloud deployments."
   },
