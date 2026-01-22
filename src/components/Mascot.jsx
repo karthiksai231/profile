@@ -15,6 +15,19 @@ const MESSAGES = [
   "Whoa! Dizzy! 🌀"
 ];
 
+import resumeData from '../data/resume.json';
+
+const GLOBAL_MESSAGES = [
+  "Nice click! 🖱️",
+  "Working hard? 💪",
+  "I saw that! 👁️",
+  "Interesting choice! 🤔",
+  "Click click! 🎵",
+  "On it! 🫡",
+  "Good one! 👍",
+  "Roger that! 🤖"
+];
+
 const Lumi = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isBlinking, setIsBlinking] = useState(false);
@@ -44,7 +57,7 @@ const Lumi = () => {
     return () => unsubscribeX();
   }, [isDizzy, x]);
 
-  // Activity Monitor (Sleep Logic)
+  // Activity Monitor (Sleep Logic) & Global Click Listener
   useEffect(() => {
     const resetIdleTimer = () => {
       if (isSleeping) {
@@ -61,18 +74,105 @@ const Lumi = () => {
       }, 5000); // Sleep after 5s of inactivity
     };
 
+    const handleGlobalClick = (event) => {
+      resetIdleTimer();
+      
+      // Ignore if clicking the mascot itself (handled by handleBodyClick)
+      if (event.target.closest('.mascot-container')) return;
+
+      const target = event.target;
+      const tag = target.tagName.toLowerCase();
+      const text = target.innerText || "";
+      const parentSection = target.closest('section');
+      const sectionId = parentSection ? parentSection.id : "";
+      
+      // Deep Inspection for Resume Content
+      const jobCard = target.closest('.timeline-item');
+      const eduCard = target.closest('.edu-card');
+      const certCard = target.closest('.cert-card');
+      const skillItem = target.closest('.skill-item') || (sectionId === 'skills' && target.tagName === 'SPAN' ? target : null);
+
+      let contextMsg = "";
+
+      // 1. Specific Content Detection
+      if (jobCard) {
+        const company = jobCard.querySelector('.job-company')?.innerText;
+        const role = jobCard.querySelector('.job-role')?.innerText;
+        if (company) {
+            contextMsg = [
+                `Worked at ${company}! 🏢`,
+                `${company} was great! 💼`,
+                `${role}? Impressive! 🌟`
+            ][Math.floor(Math.random() * 3)];
+        }
+      } else if (eduCard) {
+          const school = eduCard.querySelector('.edu-school')?.innerText;
+          const degree = eduCard.querySelector('.edu-degree')?.innerText;
+          if (school) {
+              contextMsg = [
+                  `Studied at ${school}! 🎓`,
+                  `${degree} is tough! 🧠`,
+                  "Go Aggies? (maybe) 🏈"
+              ][Math.floor(Math.random() * 3)];
+          }
+      } else if (certCard) {
+          contextMsg = "Certified pro! 📜";
+      } else if (skillItem) {
+          const skillName = skillItem.innerText;
+           contextMsg = [
+              `${skillName} is useful! 🛠️`,
+              `I know ${skillName} too! 🤖`,
+              "Great tech stack! 💻"
+          ][Math.floor(Math.random() * 3)];
+      } 
+      // 2. Fallback to Section/Tag Detection
+      else if (!contextMsg) {
+          if (tag === 'button' || target.closest('button')) {
+            contextMsg = ["Action time! 🎬", "Boop! 👆", "Processing... ⚙️"][Math.floor(Math.random() * 3)];
+          } else if (tag === 'a' || target.closest('a')) {
+             contextMsg = ["Going somewhere? 🌍", "Nice link! 🔗", "Exploring! 🧭"][Math.floor(Math.random() * 3)];
+          } else if (tag === 'input' || tag === 'textarea') {
+             contextMsg = ["Typing mode! ✍️", "Tell me more! 📝", "Input detected! 💾"][Math.floor(Math.random() * 3)];
+          } else if (tag === 'img') {
+             contextMsg = ["Nice pic! 📸", "Visuals! 🎨", "Looking good! 🖼️"][Math.floor(Math.random() * 3)];
+          } else if (sectionId === 'contact' || text.includes('Contact')) {
+             contextMsg = ["Say hi! 👋", "Let's connect! 🤝", "Drop a message! 📩"][Math.floor(Math.random() * 3)];
+          } else if (sectionId === 'skills') {
+             contextMsg = ["So many skills! 🧠", "Power level > 9000! ⚡", "Tech stack! 📚"][Math.floor(Math.random() * 3)];
+          } else if (sectionId === 'projects') {
+             contextMsg = ["I like this one! 🏗️", "Cool build! 🛠️", "Awesome work! 🏆"][Math.floor(Math.random() * 3)];
+          } else {
+             contextMsg = GLOBAL_MESSAGES[Math.floor(Math.random() * GLOBAL_MESSAGES.length)];
+          }
+      }
+
+      // 3. Small Animation (Hop)
+      controls.start({
+        y: -10,
+        scale: 1.05,
+        transition: { duration: 0.15, yoyo: 1 }
+      });
+
+      // 4. Show Message
+      setMessage(contextMsg);
+      setShowMessage(true);
+
+      if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current);
+      messageTimeoutRef.current = setTimeout(() => setShowMessage(false), 2000);
+    };
+
     const handleMouseMove = (event) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
       resetIdleTimer();
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('click', resetIdleTimer);
+    window.addEventListener('click', handleGlobalClick); // Replaced simple resetIdleTimer with full handler
     resetIdleTimer(); // Init
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('click', resetIdleTimer);
+      window.removeEventListener('click', handleGlobalClick);
       if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
       if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current);
     };
@@ -101,6 +201,9 @@ const Lumi = () => {
   };
 
   const handleBodyClick = (e) => {
+    // Prevent global handler from firing
+    e.stopPropagation();
+
     // Create particles
     const rect = e.target.getBoundingClientRect();
     const newParticles = Array.from({ length: 8 }).map((_, i) => ({

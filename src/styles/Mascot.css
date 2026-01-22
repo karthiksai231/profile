@@ -43,7 +43,7 @@
 .speech-bubble {
   position: absolute;
   top: -90px;
-  left: 10%;
+  left: 1%;
   transform: translateX(-50%);
   background: white;
   padding: 12px 20px;
