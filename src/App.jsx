@@ -7,6 +7,7 @@ import Skills from './components/Skills';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Mascot from './components/Mascot';
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <Mascot />
     </div>
   );
 }

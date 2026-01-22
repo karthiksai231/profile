@@ -1,0 +1,79 @@
+.mascot-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 120px;
+  height: 120px;
+  z-index: 1000;
+  /* Remove pointer-events: none so we can click/drag it */
+  cursor: grab;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+  touch-action: none; /* Important for dragging on touch devices */
+}
+
+.mascot-container:active {
+  cursor: grabbing;
+}
+
+.mascot-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.eye-white {
+  fill: white;
+}
+
+.eye-pupil {
+  fill: #333;
+}
+
+.mascot-body {
+  fill: #6366f1; /* Indigo-500 */
+}
+
+.mascot-belly {
+  fill: #818cf8; /* Indigo-400 */
+}
+
+/* Speech Bubble */
+.speech-bubble {
+  position: absolute;
+  top: -80px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid white;
+}
+
+.mascot-container:hover .speech-bubble.hover-visible {
+  opacity: 1;
+}
+
+.speech-bubble.visible {
+  opacity: 1;
+}
