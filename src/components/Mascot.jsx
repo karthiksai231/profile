@@ -1,105 +1,169 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useAnimation, AnimatePresence } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import '../styles/Mascot.css';
 
 const MESSAGES = [
-  "Hi there! 👋",
-  "I'm watching you! 👀",
-  "Nice click! ✨",
-  "You're awesome! 🚀",
-  "Drag me around! 🎢",
-  "Wheee! 🌪️",
-  "Coding is fun! 💻",
-  "Don't forget to hydrate! 💧",
-  "Review my code? 🥺",
-  "I love React! ⚛️"
+  "Hello friend! ✨",
+  "I'm Lumi! 🌟",
+  "So shiny! 💎",
+  "Let's build! 🚀",
+  "You're a star! ⭐",
+  "Draggable! 🛸",
+  "Need a hand? 🤖",
+  "Zzzz... 😴",
+  "Waking up! ☀️",
+  "Whoa! Dizzy! 🌀"
 ];
 
-const Mascot = () => {
+const Lumi = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isBlinking, setIsBlinking] = useState(false);
+  const [isSleeping, setIsSleeping] = useState(false);
+  const [isDizzy, setIsDizzy] = useState(false);
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const [particles, setParticles] = useState([]);
+  
   const containerRef = useRef(null);
   const controls = useAnimation();
+  const idleTimeoutRef = useRef(null);
   const messageTimeoutRef = useRef(null);
-
-  // Eye Tracking Logic
+  
+  // Motion values for drag velocity to detect dizziness
+  const x = useMotionValue(0);
+  const xVelocity = useMotionValue(0);
+  
   useEffect(() => {
+    // Determine velocity to trigger dizziness
+    const unsubscribeX = x.on('change', (latest) => {
+      const vel = x.getVelocity();
+      if (Math.abs(vel) > 1500 && !isDizzy) {
+        triggerDizzy();
+      }
+    });
+    return () => unsubscribeX();
+  }, [isDizzy, x]);
+
+  // Activity Monitor (Sleep Logic)
+  useEffect(() => {
+    const resetIdleTimer = () => {
+      if (isSleeping) {
+        setIsSleeping(false);
+        controls.start({ y: 0, scale: 1, rotate: 0, transition: { type: "spring" } });
+        setMessage("I'm awake! ☀️");
+        setShowMessage(true);
+        setTimeout(() => setShowMessage(false), 2000);
+      }
+      
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+      idleTimeoutRef.current = setTimeout(() => {
+        setIsSleeping(true);
+      }, 5000); // Sleep after 5s of inactivity
+    };
+
     const handleMouseMove = (event) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
+      resetIdleTimer();
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    window.addEventListener('click', resetIdleTimer);
+    resetIdleTimer(); // Init
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('click', resetIdleTimer);
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+      if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current);
+    };
+  }, [isSleeping, controls]);
 
   // Blinking Logic
   useEffect(() => {
     const blinkInterval = setInterval(() => {
-      setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 150);
-    }, 4000); // Blink every 4 seconds
+      if (!isSleeping && !isDizzy) {
+        setIsBlinking(true);
+        setTimeout(() => setIsBlinking(false), 150);
+      }
+    }, 3500); 
 
     return () => clearInterval(blinkInterval);
-  }, []);
+  }, [isSleeping, isDizzy]);
 
-  // Click Reaction & Message Logic
-  const handleBodyClick = () => {
-    // Jump animation
+  const triggerDizzy = () => {
+    setIsDizzy(true);
+    setMessage("Whoa! Too fast! 🌀");
+    setShowMessage(true);
+    setTimeout(() => {
+      setIsDizzy(false);
+      setShowMessage(false);
+    }, 2000);
+  };
+
+  const handleBodyClick = (e) => {
+    // Create particles
+    const rect = e.target.getBoundingClientRect();
+    const newParticles = Array.from({ length: 8 }).map((_, i) => ({
+      id: Date.now() + i,
+      x: 0, // Relative to center
+      y: 0,
+      angle: (i / 8) * 360,
+    }));
+    setParticles(prev => [...prev, ...newParticles]);
+    
+    // Animate Body
     controls.start({
-      y: -30,
-      transition: { duration: 0.2, yoyo: 1, ease: 'easeOut' },
+      scale: [1, 1.2, 0.9, 1.1, 1],
+      rotate: [0, -10, 10, -5, 5, 0],
+      transition: { duration: 0.5 }
     });
 
-    // Show random message
-    const randomMsg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-    setMessage(randomMsg);
-    setShowMessage(true);
-
-    if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current);
-    messageTimeoutRef.current = setTimeout(() => setShowMessage(false), 3000);
+    if (!isSleeping) {
+      const randomMsg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+      setMessage(randomMsg);
+      setShowMessage(true);
+      if (messageTimeoutRef.current) clearTimeout(messageTimeoutRef.current);
+      messageTimeoutRef.current = setTimeout(() => setShowMessage(false), 3000);
+    }
   };
 
-  // Calculate eye translation
+  // Eye calculation
   const calculateEyePosition = (eyeXOffset, eyeYOffset) => {
-    if (!containerRef.current) return { x: 0, y: 0 };
+    if (!containerRef.current || isSleeping || isDizzy) return { x: 0, y: 0 };
     
     const rect = containerRef.current.getBoundingClientRect();
-    const mascotCenterX = rect.left + rect.width / 2;
-    const mascotCenterY = rect.top + rect.height / 2;
-
-    const deltaX = mousePosition.x - (mascotCenterX + eyeXOffset);
-    const deltaY = mousePosition.y - (mascotCenterY + eyeYOffset);
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
     
-    const maxMove = 6;
+    const deltaX = mousePosition.x - (centerX + eyeXOffset);
+    const deltaY = mousePosition.y - (centerY + eyeYOffset);
     const angle = Math.atan2(deltaY, deltaX);
-    const distance = Math.min(Math.sqrt(deltaX * deltaX + deltaY * deltaY), 150);
-    const moveX = Math.cos(angle) * Math.min(distance / 15, maxMove);
-    const moveY = Math.sin(angle) * Math.min(distance / 15, maxMove);
-
-    return { x: moveX, y: moveY };
+    const distance = Math.min(Math.sqrt(deltaX**2 + deltaY**2), 200);
+    
+    const moveX = Math.cos(angle) * (distance / 15);
+    const moveY = Math.sin(angle) * (distance / 15);
+    
+    return { x: Math.min(Math.max(moveX, -8), 8), y: Math.min(Math.max(moveY, -8), 8) };
   };
 
-  const leftEyePos = calculateEyePosition(-15, -10);
-  const rightEyePos = calculateEyePosition(15, -10);
+  const leftEyePos = calculateEyePosition(-20, -10);
+  const rightEyePos = calculateEyePosition(20, -10);
 
   return (
     <motion.div
       className="mascot-container"
       ref={containerRef}
-      animate={controls}
       drag
-      dragMomentum={false}
-      dragConstraints={{ left: 0, right: window.innerWidth - 100, top: 0, bottom: window.innerHeight - 100 }}
-      whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-      whileTap={{ scale: 0.95 }}
+      dragConstraints={{ left: 0, right: window.innerWidth - 140, top: 0, bottom: window.innerHeight - 140 }}
+      whileHover={{ scale: 1.05 }}
+      animate={controls}
+      style={{ x }}
       onClick={handleBodyClick}
     >
       <AnimatePresence>
         {showMessage && (
           <motion.div
-            className="speech-bubble visible"
+            className="speech-bubble"
             initial={{ opacity: 0, y: 10, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 5, scale: 0.8 }}
@@ -109,85 +173,146 @@ const Mascot = () => {
         )}
       </AnimatePresence>
 
-      <svg
-        viewBox="0 0 100 100"
-        className="mascot-svg"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Antennas */}
-        <motion.path
-            d="M30 30 L20 10"
-            stroke="#6366f1"
-            strokeWidth="3"
-            strokeLinecap="round"
-             animate={{ rotate: [0, -5, 0] }}
-             transition={{ repeat: Infinity, duration: 2 }}
+      <svg viewBox="0 0 200 200" className="mascot-svg">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#818cf8" />
+            <stop offset="100%" stopColor="#6366f1" />
+          </linearGradient>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(165, 180, 252, 0.4)" />
+            <stop offset="100%" stopColor="rgba(165, 180, 252, 0)" />
+          </radialGradient>
+        </defs>
+
+        {/* Ambient Glow */}
+        <motion.circle cx="100" cy="100" r="80" fill="url(#glow)" 
+           animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+           transition={{ loop: Infinity, duration: 3, ease: "easeInOut" }}
         />
-        <motion.circle cx="20" cy="10" r="3" fill="#ef4444" animate={{ opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 1.5 }} />
 
+        {/* Floating Halo Ring */}
         <motion.path
-            d="M70 30 L80 10"
-            stroke="#6366f1"
+            d="M 50, 100 a 50,15 0 1,0 100,0 a 50,15 0 1,0 -100,0" // Ellipse path
+            fill="none"
+            stroke="#a5b4fc"
             strokeWidth="3"
-             strokeLinecap="round"
-             animate={{ rotate: [0, 5, 0] }}
-             transition={{ repeat: Infinity, duration: 2, delay: 0.5 }}
+            strokeDasharray="10 10"
+            animate={{ rotate: 360 }}
+            transition={{ loop: Infinity, duration: 8, ease: "linear" }}
+            style={{ originX: "50%", originY: "50%" }}
         />
-        <motion.circle cx="80" cy="10" r="3" fill="#ef4444" animate={{ opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.5 }} />
 
+        {/* Main Body (Organic Blob Shape) */}
+        <motion.path
+          d="M100,40 C140,40 170,70 170,110 C170,150 140,180 100,180 C60,180 30,150 30,110 C30,70 60,40 100,40 Z"
+          fill="url(#bodyGrad)"
+          animate={{
+             d: isSleeping 
+                ? "M100,60 C140,60 170,80 170,120 C170,150 140,170 100,170 C60,170 30,150 30,120 C30,80 60,60 100,60 Z" // Squished when sleeping
+                : [
+                  "M100,40 C140,40 170,70 170,110 C170,150 140,180 100,180 C60,180 30,150 30,110 C30,70 60,40 100,40 Z",
+                  "M100,35 C145,35 175,65 175,105 C175,145 145,175 100,175 C55,175 25,145 25,105 C25,65 55,35 100,35 Z",
+                  "M100,40 C140,40 170,70 170,110 C170,150 140,180 100,180 C60,180 30,150 30,110 C30,70 60,40 100,40 Z"
+                ]
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
 
-        {/* Body */}
-        <rect x="25" y="30" width="50" height="60" rx="15" className="mascot-body" />
-        <rect x="35" y="55" width="30" height="25" rx="8" className="mascot-belly" />
+        {/* Face Group */}
+        <motion.g animate={{ y: isSleeping ? 10 : 0 }}>
+             {/* Left Eye */}
+            <g transform="translate(70, 90)">
+                {isDizzy ? (
+                     <motion.path d="M-10,-10 L10,10 M-10,10 L10,-10" stroke="white" strokeWidth="4" strokeLinecap="round" animate={{ rotate: 360 }} transition={{ loop: Infinity, duration: 1 }} />
+                ) : isSleeping ? (
+                    <path d="M-10,0 Q0,10 10,0" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" />
+                ) : (
+                    <>
+                        <ellipse cx="0" cy="0" rx="12" ry="14" className="eye-white" />
+                        {!isBlinking && (
+                            <motion.circle cx="0" cy="0" r="6" className="eye-pupil" 
+                             animate={{ x: leftEyePos.x, y: leftEyePos.y }}
+                            />
+                        )}
+                        {isBlinking && <path d="M-10,2 L10,2" stroke="#1e1b4b" strokeWidth="3" />}
+                    </>
+                )}
+            </g>
 
-        {/* Eyes Container */}
-        <g>
-            <circle cx="40" cy="45" r="8" className="eye-white" />
+            {/* Right Eye */}
+            <g transform="translate(130, 90)">
+                 {isDizzy ? (
+                     <motion.path d="M-10,-10 L10,10 M-10,10 L10,-10" stroke="white" strokeWidth="4" strokeLinecap="round" animate={{ rotate: 360 }} transition={{ loop: Infinity, duration: 1 }} />
+                ) : isSleeping ? (
+                    <path d="M-10,0 Q0,10 10,0" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" />
+                ) : (
+                    <>
+                        <ellipse cx="0" cy="0" rx="12" ry="14" className="eye-white" />
+                        {!isBlinking && (
+                             <motion.circle cx="0" cy="0" r="6" className="eye-pupil" 
+                               animate={{ x: rightEyePos.x, y: rightEyePos.y }}
+                             />
+                        )}
+                        {isBlinking && <path d="M-10,2 L10,2" stroke="#1e1b4b" strokeWidth="3" />}
+                    </>
+                )}
+            </g>
+
+            {/* Mouth */}
+            <motion.path 
+                d={isSleeping ? "M90,120 Q100,125 110,120" : showMessage ? "M90,120 Q100,135 110,120" : "M90,115 Q100,125 110,115"}
+                className="mouth"
+                animate={{ scale: showMessage ? 1.2 : 1 }}
+                style={{ originX: "50%", originY: "50%" }}
+            />
             
-            {/* Left Pupil (Normal) */}
-            {!isBlinking && (
-                <motion.circle
-                cx="40"
-                cy="45"
-                r="3.5"
-                className="eye-pupil"
-                animate={{ x: leftEyePos.x, y: leftEyePos.y }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                />
+            {/* Cheeks */}
+            <circle cx="60" cy="110" r="6" fill="#f472b6" opacity="0.6" />
+            <circle cx="140" cy="110" r="6" fill="#f472b6" opacity="0.6" />
+        </motion.g>
+        
+        {/* Zzz Particles when sleeping */}
+        <AnimatePresence>
+            {isSleeping && (
+                <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    <motion.text x="140" y="50" fill="white" fontSize="20" fontWeight="bold"
+                     animate={{ y: [0, -20], opacity: [0, 1, 0], x: [0, 10] }}
+                     transition={{ duration: 2, repeat: Infinity, delay: 0 }}
+                    >Z</motion.text>
+                     <motion.text x="160" y="40" fill="white" fontSize="16" fontWeight="bold"
+                     animate={{ y: [0, -20], opacity: [0, 1, 0], x: [0, 10] }}
+                     transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                    >Z</motion.text>
+                </motion.g>
             )}
-            {/* Blink State */}
-            {isBlinking && <line x1="32" y1="45" x2="48" y2="45" stroke="#333" strokeWidth="2" strokeLinecap="round" />}
-
-            
-            <circle cx="60" cy="45" r="8" className="eye-white" />
-            
-             {/* Right Pupil (Normal) */}
-             {!isBlinking && (
-                <motion.circle
-                cx="60"
-                cy="45"
-                r="3.5"
-                className="eye-pupil"
-                animate={{ x: rightEyePos.x, y: rightEyePos.y }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                />
-             )}
-              {/* Blink State */}
-             {isBlinking && <line x1="52" y1="45" x2="68" y2="45" stroke="#333" strokeWidth="2" strokeLinecap="round" />}
-        </g>
-
-        {/* Mouth - Changes on hover/click */}
-        <motion.path
-          d="M40 70 Q50 75 60 70"
-          stroke="#333"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="transparent"
-          animate={{ d: showMessage ? "M40 70 Q50 85 60 70" : "M40 70 Q50 75 60 70" }} 
-        />
+        </AnimatePresence>
       </svg>
+      
+      {/* Click Particles */}
+      {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            className="particle"
+            initial={{ opacity: 1, x: 70, y: 70, scale: 0 }}
+            animate={{ 
+                x: 70 + Math.cos(p.angle * Math.PI / 180) * 80, 
+                y: 70 + Math.sin(p.angle * Math.PI / 180) * 80, 
+                opacity: 0, 
+                scale: 1 
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{ 
+                background: "#fbbf24", 
+                width: "8px", 
+                height: "8px", 
+                borderRadius: "50%" 
+            }}
+            onAnimationComplete={() => setParticles(prev => prev.filter(item => item.id !== p.id))}
+          />
+      ))}
     </motion.div>
   );
 };
 
-export default Mascot;
+export default Lumi;
