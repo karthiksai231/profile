@@ -1,61 +1,78 @@
 :root {
   /* Colors */
-  --color-bg: #0a0a0a;
-  --color-surface: #1a1a1a;
-  --color-surface-hover: #2a2a2a;
-  --color-primary: #ffd700; /* Gold */
-  --color-primary-dim: #cca700;
-  --color-secondary: #00bfff; /* Deep Sky Blue */
-  --color-text: #ffffff;
-  --color-text-dim: #a0a0a0;
-  --color-border: #333333;
+  --color-bg: #08080c;
+  --color-surface: rgba(20, 20, 30, 0.7);
+  --color-card: linear-gradient(150deg, rgba(24, 24, 34, 0.9), rgba(14, 14, 20, 0.9));
+  --color-primary: #e8b931;
+  --color-secondary: #5ed0ff;
+  --color-text: #ece9e2;
+  --color-text-dim: #9d9aa8;
+  --color-text-faint: #5c5966;
+  --color-border: rgba(255, 255, 255, 0.08);
 
   /* Typography */
-  --font-main: 'Inter', sans-serif;
-  --font-mono: 'Fira Code', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-main: 'Archivo', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
 
-  /* Spacing */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 4rem;
-  --spacing-xl: 8rem;
-
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-medium: 0.3s ease;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: var(--color-primary);
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--color-secondary);
+  color: #ffe27a;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--color-bg);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface);
+  background: #22222e;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border);
+/* Shared section bits */
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-primary);
+  letter-spacing: 0.22em;
+  margin: 0 0 14px;
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.4; }
 }

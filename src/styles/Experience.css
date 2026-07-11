@@ -1,111 +1,98 @@
 .experience {
-  padding: var(--spacing-xl) 0;
-  position: relative;
+  padding: 80px 32px 140px;
+  perspective: 1200px;
 }
 
-.timeline {
-  position: relative;
-  max-width: 1000px;
+.experience-container {
+  max-width: 980px;
   margin: 0 auto;
 }
 
-.timeline::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  background: var(--color-border);
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  margin-left: -1px;
+.kicker.center,
+.section-heading.center {
+  text-align: center;
 }
 
-.timeline-item {
-  padding: 10px 40px;
-  position: relative;
-  background-color: inherit;
-  width: 50%;
-  box-sizing: border-box;
+.experience .section-heading {
+  margin-bottom: 70px;
 }
 
-.timeline-item:nth-child(odd) {
-  left: 0;
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
 }
 
-.timeline-item:nth-child(even) {
-  left: 50%;
+.job-tilt {
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
-.timeline-item::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  right: -8px;
-  background-color: var(--color-surface);
-  border: 4px solid var(--color-primary);
-  top: 24px;
-  border-radius: 50%;
-  z-index: 1;
+.job-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 36px 42px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  max-width: 760px;
+  transition: border-color 0.2s ease;
 }
 
-.timeline-item:nth-child(even)::after {
-  left: -8px;
+.job-card:hover {
+  border-color: rgba(232, 185, 49, 0.4);
 }
 
-.timeline-content {
-  padding: 20px 30px;
-  background-color: var(--color-surface);
-  position: relative;
-  border-radius: 8px;
-  transition: transform var(--transition-medium);
-  border: 1px solid transparent;
+.job-card-left {
+  margin-right: auto;
 }
 
-.timeline-content:hover {
-  transform: translateY(-5px);
-  border-color: var(--color-primary-dim);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+.job-card-right {
+  margin-left: auto;
 }
 
-.job-header {
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 1rem;
-}
-
-.job-role {
-  margin: 0 0 0.5rem;
-  color: var(--color-primary);
-  font-size: 1.25rem;
+.job-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .job-company {
-  display: block;
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
 }
 
-.job-period, .job-location {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--color-text-dim);
+.job-period {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-faint);
+}
+
+.job-role {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 6px 0 18px;
 }
 
 .job-achievements {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
 }
 
 .job-achievements li {
   position: relative;
-  padding-left: 1.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+  padding-left: 22px;
+  font-size: 15px;
   line-height: 1.6;
-  color: var(--color-text-dim);
+  color: #b3b0bc;
 }
 
 .job-achievements li::before {
@@ -116,25 +103,10 @@
 }
 
 @media (max-width: 768px) {
-  .timeline::after {
-    left: 31px;
+  .job-card {
+    padding: 26px 24px;
   }
-  
-  .timeline-item {
-    width: 100%;
-    padding-left: 70px;
-    padding-right: 25px;
-  }
-  
-  .timeline-item::after {
-    left: 23px;
-  }
-  
-  .timeline-item:nth-child(even) {
-    left: 0%;
-  }
-
-  .timeline-item:nth-child(even)::after {
-    left: 23px;
+  .experience .section-heading {
+    font-size: 32px;
   }
 }
