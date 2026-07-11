@@ -1,66 +1,65 @@
 .education {
-  padding: var(--spacing-xl) 0;
+  padding: 0 32px 140px;
+  perspective: 1200px;
 }
 
 .education-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  max-width: 1000px;
+  max-width: 980px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
 }
 
-.education-column {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.edu-card, .cert-card {
-  background-color: var(--color-surface);
-  padding: 2rem;
-  border-radius: 8px;
+.edu-panel {
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  transition: transform var(--transition-fast);
+  border-radius: 16px;
+  padding: 30px;
+  will-change: transform, opacity;
 }
 
-.edu-card:hover, .cert-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--color-primary-dim);
+.panel-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-primary);
+  letter-spacing: 0.18em;
+  margin: 0 0 16px;
+}
+
+.edu-entry + .edu-entry {
+  margin-top: 22px;
 }
 
 .edu-degree {
-  margin: 0 0 0.5rem;
-  color: var(--color-primary);
-  font-size: 1.2rem;
-}
-
-.edu-school {
-  display: block;
+  font-family: var(--font-display);
+  font-size: 18px;
   font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
-}
-
-.edu-period, .edu-location {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--color-text-dim);
-}
-
-.cert-name {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 500;
 }
 
-@media (max-width: 768px) {
+.edu-meta {
+  font-size: 13px;
+  color: var(--color-text-dim);
+  margin: 6px 0 0;
+}
+
+.cert-list {
+  font-size: 14.5px;
+  line-height: 2;
+  color: #c9c6d1;
+  margin: 0;
+}
+
+.panel-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
   .education-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .edu-card, .cert-card {
-    padding: 1.5rem;
   }
 }
