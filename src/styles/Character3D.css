@@ -1,0 +1,38 @@
+.character-3d {
+  display: block;
+  background: transparent;
+  --poster-color: transparent;
+}
+
+/* Fixed companion — pinned to the lower right, on screen at every scroll depth */
+.character-3d-fixed {
+  position: fixed;
+  z-index: 0;
+  right: 2vw;
+  bottom: 4vh;
+  width: min(20vw, 280px);
+  height: min(26vw, 360px);
+  pointer-events: none;
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.55));
+}
+
+/* Contact buddy — small, centered above the closing heading */
+.character-3d-contact {
+  width: 180px;
+  height: 190px;
+  margin: 0 auto 0.5rem;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.5));
+}
+
+@media (max-width: 1100px) {
+  .character-3d-fixed {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .character-3d-contact {
+    width: 140px;
+    height: 150px;
+  }
+}

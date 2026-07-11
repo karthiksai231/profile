@@ -7,6 +7,7 @@
  *   data-depth="-0.35"      — parallax vs viewport center
  *   data-tilt-card="left"   — card tilts in 3D relative to viewport center
  *   data-tilt-in            — one-shot flip-in reveal on first view
+ *   data-scrub-anim         — <model-viewer> animation timeline bound to scroll
  *   #skills-cube / #skills  — cube rotates with section scroll progress
  */
 export function initScrollFX({ intensity = 6 } = {}) {
@@ -80,6 +81,27 @@ export function initScrollFX({ intensity = 6 } = {}) {
       const vis = Math.max(0, 1 - Math.abs(clamped) * 0.55);
       el.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg)`;
       el.style.opacity = String(0.45 + vis * 0.55);
+    });
+
+    // Scroll-scrubbed model-viewer animations: timeline follows scroll progress
+    document.querySelectorAll('[data-scrub-anim]').forEach((el) => {
+      if (!el.loaded || !el.duration) return;
+      if (!el.paused) el.pause();
+      const sec = el.closest('section');
+      let p;
+      if (sec && sec.getBoundingClientRect().top + window.scrollY < vh / 2) {
+        // Section starts at the top of the page (hero): scrub over the first viewport
+        p = Math.max(0, Math.min(1, window.scrollY / (vh * 0.8)));
+      } else if (sec) {
+        // Section further down: scrub as it traverses the viewport
+        const rect = sec.getBoundingClientRect();
+        p = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
+      } else {
+        // Fixed companion (no section): loop once per screen-height of scroll
+        p = (window.scrollY / (vh * 0.8)) % 1;
+      }
+      // 0.999: clamping to exactly duration wraps looping clips back to frame 0
+      el.currentTime = p * el.duration * 0.999;
     });
 
     // Skills cube: rotation driven by section scroll progress

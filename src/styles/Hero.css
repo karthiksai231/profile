@@ -49,6 +49,7 @@
 
 .hero-scene {
   position: relative;
+  z-index: 2;
   text-align: center;
   transform-style: preserve-3d;
   will-change: transform;
