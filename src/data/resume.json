@@ -1,27 +1,30 @@
 {
   "profile": {
     "name": "Kartheek Pamidimukkala",
-    "title": "Software Engineer",
+    "title": "Senior Software Engineer",
     "phone": "(903)-423-2849",
     "email": "karthiksai231@gmail.com",
     "links": [
       { "name": "Github", "url": "https://github.com/karthiksai231" },
       { "name": "Medium", "url": "https://medium.com/@kartheeksaip" }
     ],
-    "summary": "Experienced Software Engineer with 8+ years in back-end development, cloud infrastructure (AWS, Azure), and micro-services. Passionate about building scalable, high-performance systems with test-driven development. Proven ability to optimize system performance (300% improvement) and enhance customer experience. Strong background in CI/CD, distributed systems, and cloud deployments."
+    "summary": "Software Engineer with 10 years designing, building, and operating large-scale distributed systems and enterprise platforms. Currently lead AI-native internal apps and enterprise platforms at Meta — reusable multi-agent workflows with tool routing, structured outputs, and human approvals, RAG pipelines, MCP connectors, eval harnesses, and NL-to-SQL data access. Strong in Python backend engineering, system design, enterprise integrations, and data architecture."
   },
   "employment": [
     {
       "company": "Meta",
       "location": "Raleigh",
-      "role": "Software Engineer",
+      "role": "Senior Software Engineer",
       "period": "Apr 2022 — Present",
       "achievements": [
-        "Developed Agentic AI systems to address complex business use cases, enhancing operational efficiency.",
-        "Designed and developed Caching Service and improved the response time by 80%.",
-        "Developed an automatic sync to refresh the tax rates periodically which helps the customers to get the most updated rates during checkout.",
-        "Created dashboards and alerting for multiple service which our team owns.",
-        "Successfully solved customer impacting defects with in the SLA period."
+        "Lead the Tax Data and Revenue Platform serving Finance teams; designed core data architecture — high-throughput ingestion pipelines, target schemas, quality checks, data lineage, and governance — plus a natural-language-to-SQL interface so non-technical stakeholders can safely self-serve data.",
+        "Led the design and delivery of an AI tax-audit agent platform that drafts comprehensive responses with structured outputs using RAG over historical audit archives, with human-in-the-loop approvals and full audit trails — reducing audit response times by 90%.",
+        "Built secure agent tool interfaces using an MCP-style architecture with tool routing, granting governed access to data and business logic with strict permission and safety boundaries — improving agent response times by 60%.",
+        "Led eval and feedback-loop infrastructure for the audit agent — eval harness, regression tests, monitoring, and metrics — raising response accuracy to 90%.",
+        "Integrated third-party tax engines and internal finance systems via fault-tolerant APIs with idempotency keys, exponential backoff, and rate-limit handling, ensuring exactly-once processing of revenue transactions.",
+        "Designed and implemented high-performance caching services improving application response times by 80%.",
+        "Implemented audit trails and role-based permissions for all agent-initiated actions on financial data, meeting internal compliance and SOX audit requirements.",
+        "Partnered with system and business owners to turn messy, ambiguous enterprise workflows into reliable internal apps adopted across Finance and operations."
       ]
     },
     {
@@ -31,9 +34,7 @@
       "period": "Dec 2021 — Apr 2022",
       "achievements": [
         "Improved customer conversion flows by 30%.",
-        "Designed software solutions by analyzing system performance standards, increasing performance efficiency by 20%.",
-        "Collaborate effectively with team members as well as Quality Engineering and Release Engineering team.",
-        "Consistently demonstrate ownership and on time delivery."
+        "Designed software solutions by analyzing system performance standards, increasing performance efficiency by 20%."
       ]
     },
     {
@@ -42,10 +43,8 @@
       "role": "Senior Software Engineer",
       "period": "Jul 2021 — Dec 2021",
       "achievements": [
-        "Deployed highly scalable micro services to AWS using Iac.",
-        "Created self-signed certificated to enable HTTPS for securing transactions.",
-        "Created guidelines for monitoring and logging for the entire platform.",
-        "Core development experience in large scale enterprise Java applications using Spring boot and Spring cloud."
+        "Created IaC templates for deploying scalable microservices to AWS, saving 60% of developer time.",
+        "Created guidelines for monitoring and logging for the entire platform."
       ]
     },
     {
@@ -54,11 +53,10 @@
       "role": "Cloud Platform Engineer",
       "period": "Dec 2019 — Jul 2021",
       "achievements": [
-        "Designed scalable software architecture for various software projects.",
-        "Solved cross-region database sync problem required for certain business critical flows.",
-        "Improved one of the back-end service performance by 300% (30K - 100K connections).",
-        "Created dashboard for monitoring the performance of 30 services. Also provided a standard template across teams for creating dashboards for their services.",
-        "Act as mentor for junior engineers and lead small engineering teams in the delivery of enterprise applications."
+        "Architected and optimized high-concurrency backend services to handle extreme traffic scaling, achieving a 300% throughput gain — from 30K to 100K concurrent connections.",
+        "Solved cross-region database sync problem required for business-critical flows.",
+        "Created a dashboard monitoring the performance of 30 services and provided a standard template adopted across teams.",
+        "Mentored junior engineers and led small engineering teams."
       ]
     },
     {
@@ -67,11 +65,8 @@
       "role": "Software Engineer",
       "period": "Sep 2016 — Dec 2019",
       "achievements": [
-        "Created RESTful API endpoint's using .Net Core, .Net Standard.",
-        "Used React JS for front-end development.",
-        "Played key role in feature implementation, enhancement and code refactoring.",
-        "Mitigated DDoS attack on the back-end systems by implementing rate limiting.",
-        "Solved multiple customer issues on call with the customers and received positive feedback directly from customers."
+        "Redesigned legacy monolithic infrastructure into decoupled microservices, leveraging robust system design principles to reduce production error rates by 90%.",
+        "Mitigated a DDoS attack on the back-end systems by implementing rate limiting."
       ]
     }
   ],
@@ -90,7 +85,7 @@
     }
   ],
   "skills": [
-    "JavaScript", "MySQL", "Git", "Python", "SQL", "Leadership Skills", "Java", "C#", "Amazon AWS", "Microsoft Azure", "MongoDB", "Spring Boot", "React", "AngularJS", "Docker", "Kubernetes", "Apache Kafka", "C++"
+    "Python", "RAG", "LLM", "Agent Orchestration", "MCP", "Evals", "Structured Outputs", "FastAPI", "Flask", "SQL", "Java", "C#", "C++", "Amazon AWS", "Microsoft Azure", "Docker", "Kubernetes", "Apache Kafka", "Spring Boot", "MongoDB", "Redis", "DynamoDB", "Git", "AngularJS"
   ],
   "certifications": [
     "AWS Certified Solutions Architect – Associate Certificate",

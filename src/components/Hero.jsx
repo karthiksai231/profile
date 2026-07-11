@@ -14,7 +14,7 @@ const Hero = () => {
 
       <div id="hero-scene" className="hero-scene">
         <p className="hero-kicker" data-layer="60">
-          SOFTWARE ENGINEER · RALEIGH, NC
+          SENIOR SOFTWARE ENGINEER · RALEIGH, NC
         </p>
         <h1 className="hero-name" data-layer="110">
           {first}
@@ -22,9 +22,9 @@ const Hero = () => {
           {rest.join(' ')}
         </h1>
         <p className="hero-summary" data-layer="45">
-          Eight years building backends that stay fast at scale — Meta, Angi,
-          Bandwidth, Lenovo, Citrix. Currently teaching AI agents to do real
-          work.
+          Ten years building distributed systems that stay fast at scale —
+          Meta, Angi, Bandwidth, Lenovo, Citrix. Currently leading AI-native
+          platforms at Meta: multi-agent workflows, RAG, and evals.
         </p>
         <div className="hero-ctas" data-layer="80">
           <a href="#contact" className="btn btn-primary">
@@ -43,8 +43,8 @@ const Hero = () => {
         </div>
         <div className="hero-chip hero-chip-right" data-layer="130">
           <div className="chip-card chip-blue">
-            <p className="chip-value chip-value-blue">80%</p>
-            <p className="chip-label">faster responses @ Meta</p>
+            <p className="chip-value chip-value-blue">90%</p>
+            <p className="chip-label">faster audit responses @ Meta</p>
           </div>
         </div>
       </div>

@@ -3,12 +3,12 @@ import resumeData from '../data/resume.json';
 import '../styles/Skills.css';
 
 const CUBE_FACES = [
-  { label: 'LANGUAGES', items: 'JavaScript · Python · Java · C#', transform: 'translateZ(125px)' },
-  { label: 'FRONTEND', items: 'React · AngularJS · HTML/CSS', transform: 'rotateY(90deg) translateZ(125px)' },
-  { label: 'BACKEND', items: 'Spring Boot · .NET · Node · Kafka', transform: 'rotateY(180deg) translateZ(125px)' },
+  { label: 'LANGUAGES', items: 'Python · Java · C# · SQL', transform: 'translateZ(125px)' },
+  { label: 'AI', items: 'RAG · Agents · MCP · Evals', transform: 'rotateY(90deg) translateZ(125px)' },
+  { label: 'BACKEND', items: 'FastAPI · Flask · Spring Boot · Kafka', transform: 'rotateY(180deg) translateZ(125px)' },
   { label: 'CLOUD', items: 'AWS · Azure · Docker · K8s', transform: 'rotateY(270deg) translateZ(125px)' },
-  { label: 'DATA', items: 'MySQL · MongoDB · SQL', transform: 'rotateX(90deg) translateZ(125px)' },
-  { label: 'PRACTICES', items: 'TDD · CI/CD · Distributed systems', transform: 'rotateX(-90deg) translateZ(125px)' },
+  { label: 'DATA', items: 'Redis · MongoDB · DynamoDB', transform: 'rotateX(90deg) translateZ(125px)' },
+  { label: 'PRACTICES', items: 'Structured outputs · CI/CD · Distributed systems', transform: 'rotateX(-90deg) translateZ(125px)' },
 ];
 
 const Skills = () => {

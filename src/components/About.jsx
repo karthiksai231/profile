@@ -6,10 +6,11 @@ const About = () => (
     <div className="about-content" data-tilt-in>
       <p className="kicker">ABOUT</p>
       <p className="about-statement">
-        I build <span className="accent">scalable, high-performance systems</span> —
-        back-end services, cloud infrastructure on AWS and Azure, and
-        microservices with test-driven development. CI/CD, distributed systems,
-        and a habit of leaving things faster than I found them.
+        I build <span className="accent">AI-native platforms on distributed-systems
+        foundations</span> — multi-agent workflows, RAG pipelines, MCP connectors,
+        and eval harnesses that turn ambiguous business workflows into reliable
+        internal apps. Ten years of Python backend engineering, data
+        architecture, and a habit of leaving things faster than I found them.
       </p>
     </div>
   </section>

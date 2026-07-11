@@ -42,7 +42,7 @@ const Contact = () => {
             </a>
           ))}
           <a
-            href="/Kartheek_Pamidimukkala_-_Software_Engineer.pdf"
+            href="/Kartheek_Pamidimukkala_-_Senior_Software_Engineer.pdf"
             download
           >
             Résumé ↓
