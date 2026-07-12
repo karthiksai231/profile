@@ -8,6 +8,7 @@
  *   data-tilt-card="left"   — card tilts in 3D relative to viewport center
  *   data-tilt-in            — one-shot flip-in reveal on first view
  *   data-scrub-anim         — <model-viewer> animation timeline bound to scroll
+ *   data-sync="start,end"   — reveal synced to the backdrop video clock (seconds)
  *   #skills-cube / #skills  — cube rotates with section scroll progress
  */
 export function initScrollFX({ intensity = 6 } = {}) {
@@ -56,9 +57,27 @@ export function initScrollFX({ intensity = 6 } = {}) {
         ` rotateY(${mouse.x * 8 * strength}deg)` +
         ` translateY(${sy * 0.25}px)`;
       scene.style.opacity = String(1 - heroP * 0.9);
+
+      // Sync reveals to the backdrop video: each element builds in over its
+      // [start,end] window, holds, and dips out at the loop seam to replay.
+      const video = document.querySelector('.transform-video');
+      const synced = video && video.duration > 0;
+      const t = synced ? video.currentTime : 0;
+      const seam = synced
+        ? Math.max(0, Math.min(1, (video.duration - t) / 0.45))
+        : 1;
+
       scene.querySelectorAll('[data-layer]').forEach((el) => {
         const z = parseFloat(el.dataset.layer) * strength;
-        el.style.transform = `translateZ(${z}px)`;
+        let lift = 0;
+        if (el.dataset.sync && synced) {
+          const [s, e] = el.dataset.sync.split(',').map(Number);
+          const q = Math.max(0, Math.min(1, (t - s) / (e - s)));
+          const ease = q * q * (3 - 2 * q);
+          el.style.opacity = String(Math.min(ease, seam));
+          lift = (1 - ease) * 36;
+        }
+        el.style.transform = `translateZ(${z}px) translateY(${lift}px)`;
       });
     }
 

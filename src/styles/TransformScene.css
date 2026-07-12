@@ -1,0 +1,26 @@
+.transform-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.transform-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Keeps foreground text readable over the cinematic backdrop */
+.transform-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      rgba(8, 8, 12, 0.88) 0%,
+      rgba(8, 8, 12, 0.72) 45%,
+      rgba(8, 8, 12, 0.45) 100%
+    );
+}

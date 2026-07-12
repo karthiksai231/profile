@@ -8,6 +8,7 @@ import Education from './components/Education';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Character3D from './components/Character3D';
+import TransformScene from './components/TransformScene';
 import { initScrollFX } from './effects/scrollFX';
 import './App.css';
 
@@ -16,12 +17,7 @@ function App() {
 
   return (
     <div className="App">
-      <Character3D
-        src="/models/greeter.glb"
-        alt="Robot mascot companion"
-        className="character-3d-fixed"
-        scrollScrub
-      />
+      <TransformScene />
       <Header />
       <main>
         <Hero />

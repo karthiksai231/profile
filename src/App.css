@@ -2,3 +2,9 @@
   background: var(--color-bg);
   overflow-x: clip;
 }
+
+/* Page content stacks above the fixed transform-scene backdrop */
+.App > main {
+  position: relative;
+  z-index: 1;
+}

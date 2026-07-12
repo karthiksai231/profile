@@ -13,20 +13,20 @@ const Hero = () => {
       <div className="hero-grid-floor" />
 
       <div id="hero-scene" className="hero-scene">
-        <p className="hero-kicker" data-layer="60">
+        <p className="hero-kicker" data-layer="60" data-sync="0.4,1.2">
           SENIOR SOFTWARE ENGINEER · RALEIGH, NC
         </p>
-        <h1 className="hero-name" data-layer="110">
+        <h1 className="hero-name" data-layer="110" data-sync="1.0,2.4">
           {first}
           <br />
           {rest.join(' ')}
         </h1>
-        <p className="hero-summary" data-layer="45">
+        <p className="hero-summary" data-layer="45" data-sync="2.4,3.6">
           Ten years building distributed systems that stay fast at scale —
           Meta, Angi, Bandwidth, Lenovo, Citrix. Currently leading AI-native
           platforms at Meta: multi-agent workflows, RAG, and evals.
         </p>
-        <div className="hero-ctas" data-layer="80">
+        <div className="hero-ctas" data-layer="80" data-sync="3.4,4.4">
           <a href="#contact" className="btn btn-primary">
             Get in touch
           </a>
@@ -35,13 +35,13 @@ const Hero = () => {
           </a>
         </div>
 
-        <div className="hero-chip hero-chip-left" data-layer="150">
+        <div className="hero-chip hero-chip-left" data-layer="150" data-sync="4.4,5.4">
           <div className="chip-card chip-gold">
             <p className="chip-value">300%</p>
             <p className="chip-label">perf gain @ Lenovo</p>
           </div>
         </div>
-        <div className="hero-chip hero-chip-right" data-layer="130">
+        <div className="hero-chip hero-chip-right" data-layer="130" data-sync="4.8,5.8">
           <div className="chip-card chip-blue">
             <p className="chip-value chip-value-blue">90%</p>
             <p className="chip-label">faster audit responses @ Meta</p>
