@@ -61,7 +61,7 @@ export function initScrollFX({ intensity = 6 } = {}) {
       // Sync reveals to the backdrop video: each element builds in over its
       // [start,end] window, holds, and dips out at the loop seam to replay.
       const video = document.querySelector('.transform-video');
-      const synced = video && video.duration > 0;
+      const synced = video && video.duration > 0 && !video.paused;
       const t = synced ? video.currentTime : 0;
       const seam = synced
         ? Math.max(0, Math.min(1, (video.duration - t) / 0.45))
@@ -70,12 +70,17 @@ export function initScrollFX({ intensity = 6 } = {}) {
       scene.querySelectorAll('[data-layer]').forEach((el) => {
         const z = parseFloat(el.dataset.layer) * strength;
         let lift = 0;
-        if (el.dataset.sync && synced) {
-          const [s, e] = el.dataset.sync.split(',').map(Number);
-          const q = Math.max(0, Math.min(1, (t - s) / (e - s)));
-          const ease = q * q * (3 - 2 * q);
-          el.style.opacity = String(Math.min(ease, seam));
-          lift = (1 - ease) * 36;
+        if (el.dataset.sync) {
+          if (synced) {
+            const [s, e] = el.dataset.sync.split(',').map(Number);
+            const q = Math.max(0, Math.min(1, (t - s) / (e - s)));
+            const ease = q * q * (3 - 2 * q);
+            el.style.opacity = String(Math.min(ease, seam));
+            lift = (1 - ease) * 36;
+          } else {
+            // Video not playing (blocked autoplay, saver mode): never hide copy
+            el.style.opacity = '1';
+          }
         }
         el.style.transform = `translateZ(${z}px) translateY(${lift}px)`;
       });
