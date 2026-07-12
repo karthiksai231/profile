@@ -2,9 +2,9 @@
   "profile": {
     "name": "Kartheek Pamidimukkala",
     "title": "Senior Software Engineer",
-    "phone": "(903)-423-2849",
     "email": "karthiksai231@gmail.com",
     "links": [
+      { "name": "LinkedIn", "url": "https://www.linkedin.com/in/kartheekpamidimukkala/" },
       { "name": "Github", "url": "https://github.com/karthiksai231" },
       { "name": "Medium", "url": "https://medium.com/@kartheeksaip" }
     ],

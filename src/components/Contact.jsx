@@ -4,7 +4,7 @@ import Character3D from './Character3D';
 import '../styles/Contact.css';
 
 const Contact = () => {
-  const { email, phone, links } = resumeData.profile;
+  const { email, links } = resumeData.profile;
 
   return (
     <section id="contact" className="contact">
@@ -26,8 +26,13 @@ const Contact = () => {
           <a href={`mailto:${email}`} className="btn btn-primary">
             {email}
           </a>
-          <a href={`tel:${phone}`} className="btn btn-outline">
-            {phone}
+          <a
+            href="https://www.linkedin.com/in/kartheekpamidimukkala/"
+            className="btn btn-outline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
           </a>
         </div>
         <div className="contact-social">
